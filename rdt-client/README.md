@@ -1,6 +1,8 @@
 # RDT Client (Home Assistant Add-on)
 
-This add-on runs the official `rogerfar/rdtclient` container.
+**Version 0.2.3**
+
+This add-on runs the official `rogerfar/rdtclient` container, providing Real-Debrid torrent client functionality within Home Assistant.
 
 ## Configuration
 
@@ -26,3 +28,13 @@ Keep the default **Database path** `/data/db/rdtclient.db`.
 ## Troubleshooting
 - If the add-on doesn't appear, click **Add-on Store → ⋮ → Reload**.
 - Ensure your configured path lives under `/share` and is writable.
+- If you encounter build issues, make sure you're using the latest version of the add-on.
+
+## Recent Updates (v0.2.3)
+- **Fixed AppArmor profile issues**: Resolved installation errors related to security profile loading
+- **Enhanced security permissions**: Updated AppArmor configuration for better Home Assistant compatibility
+- **Improved network and file system access**: Added support for IPv6 and additional system paths
+
+### Previous Updates (v0.2.2)
+- Fixed Docker build issues by updating package manager commands for Alpine Linux compatibility
+- Improved error handling and setup process
