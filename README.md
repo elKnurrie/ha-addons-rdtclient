@@ -1,6 +1,6 @@
 # RDT Client – Home Assistant Add-on
 
-**Current Version: 0.3.1**
+**Current Version: 0.3.2**
 
 This repository provides a Home Assistant add-on wrapping the official
 https://hub.docker.com/r/rogerfar/rdtclient image.
@@ -26,6 +26,12 @@ https://hub.docker.com/r/rogerfar/rdtclient image.
 After first start, you'll need to manually configure the download path in RDT Client's settings to match the path you configured in the add-on (default `/share/rdt-downloads`).
 
 ## Recent Updates
+
+### Version 0.3.2 - Enhanced S6 Overlay Support
+- **Fixed S6 runtime directory creation**: Resolved s6-mkdir permission denied errors for /run/s6 and /run/service
+- **Comprehensive S6 overlay permissions**: Added all necessary capabilities and file permissions for S6 system
+- **Enhanced runtime support**: Better permissions for /run, /var, /proc, and /sys directories
+- **Complete S6 binary coverage**: Permissions for all S6 overlay tools and utilities
 
 ### Version 0.3.1 - Fixed Init System Compatibility  
 - **Custom init wrapper**: Created `/custom-init` that runs Home Assistant setup then delegates to original `/init`
