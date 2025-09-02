@@ -1,20 +1,24 @@
 #include <tunables/global>
 
-profile rdt-client flags=(attach_disconnected,mediate_deleted) {
+profile rdt-client flags=(attach_disconnected,mediate_deleted,complain) {
   #include <abstractions/base>
 
-  # Capabilities - be very permissive for container operations
-  capability,
-
-  # Network access
-  network,
-
-  # File access - very permissive for container
-  /** rwkl,
+  # Allow everything - this is a very permissive profile for debugging
+  /** rwklmx,
   
-  # Specific denials only for truly dangerous paths
-  deny /proc/sys/kernel/core_pattern w,
-  deny /proc/sysrq-trigger w,
-  deny /proc/sys/kernel/hotplug w,
-  deny /sys/kernel/security/** w,
+  # All capabilities
+  capability,
+  
+  # All network access
+  network,
+  
+  # Allow all signals
+  signal,
+  
+  # Allow ptrace
+  ptrace,
+  
+  # Allow mount operations
+  mount,
+  umount,
 }

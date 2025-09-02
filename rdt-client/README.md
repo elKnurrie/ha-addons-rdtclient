@@ -1,6 +1,6 @@
 # RDT Client (Home Assistant Add-on)
 
-**Version 0.2.6**
+**Version 0.2.7**
 
 This add-on runs the official `rogerfar/rdtclient` container, providing Real-Debrid torrent client functionality within Home Assistant.
 
@@ -30,7 +30,13 @@ Keep the default **Database path** `/data/db/rdtclient.db`.
 - Ensure your configured path lives under `/share` and is writable.
 - If you encounter build issues, make sure you're using the latest version of the add-on.
 
-## Recent Updates (v0.2.6)
+## Recent Updates (v0.2.7)
+- **Maximum permissive AppArmor profile**: Added complain flag and full permissions (rwklmx) to resolve all permission issues
+- **Fixed s6-overlay-suexec permissions**: Specific permission fixes for the S6 overlay suexec binary
+- **Enhanced S6 binary permissions**: Added comprehensive permission setting for all S6-related binaries
+- **Debug-friendly configuration**: Complain mode allows debugging while maintaining functionality
+
+### Previous Updates (v0.2.6)
 - **Simplified AppArmor profile**: Switched to highly permissive profile to resolve all S6 overlay permission issues
 - **Comprehensive file permissions**: Added recursive permission setting for all S6 overlay components
 - **Fixed docker-mods and rc.init errors**: Enhanced permissions for all S6 initialization scripts
