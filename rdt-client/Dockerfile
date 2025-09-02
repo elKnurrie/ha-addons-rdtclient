@@ -3,19 +3,37 @@ FROM rogerfar/rdtclient:latest
 # Install jq to read /data/options.json written by Home Assistant
 RUN apk add --no-cache jq
 
-# Add s6-rc cont-init script
-COPY rootfs/ /
+# Create a simple startup script
+COPY <<EOF /usr/local/bin/start.sh
+#!/bin/bash
+set -e
 
-# Ensure proper permissions for all S6 overlay components and specifically s6-overlay-suexec
-RUN find /etc/cont-init.d -type f -exec chmod +x {} \; 2>/dev/null || true && \
-    find /etc/services.d -type f -name "run" -exec chmod +x {} \; 2>/dev/null || true && \
-    find /etc/services.d -type f -name "finish" -exec chmod +x {} \; 2>/dev/null || true && \
-    chmod +x /init 2>/dev/null || true && \
-    find /package -type f -executable -exec chmod +x {} \; 2>/dev/null || true && \
-    find /run/s6 -type f -exec chmod +x {} \; 2>/dev/null || true && \
-    chmod +x /docker-mods 2>/dev/null || true && \
-    find /command -type f -exec chmod +x {} \; 2>/dev/null || true && \
-    find /usr/bin -name "*s6*" -exec chmod +x {} \; 2>/dev/null || true && \
-    find /bin -name "*s6*" -exec chmod +x {} \; 2>/dev/null || true && \
-    chmod +x /usr/bin/s6-overlay-suexec 2>/dev/null || true && \
-    chmod +x /bin/s6-overlay-suexec 2>/dev/null || true
+# Read download path from Home Assistant options
+OPTIONS_FILE="/data/options.json"
+DEFAULT_PATH="/share/rdt-downloads"
+
+DOWNLOAD_PATH="\${DEFAULT_PATH}"
+if [ -f "\$OPTIONS_FILE" ]; then
+  VAL=\$(jq -r '.download_path // empty' "\$OPTIONS_FILE" 2>/dev/null || echo "")
+  if [ -n "\${VAL}" ] && [[ "\${VAL}" == /share/* ]]; then
+    DOWNLOAD_PATH="\${VAL}"
+  fi
+fi
+
+# Create download directory
+mkdir -p "\$DOWNLOAD_PATH"
+chmod 755 "\$DOWNLOAD_PATH"
+
+# Set environment variable for RDT Client
+export RDT_DOWNLOAD_PATH="\$DOWNLOAD_PATH"
+
+echo "RDT Client starting with download path: \$DOWNLOAD_PATH"
+
+# Start the original RDT Client
+exec /app/RDTClient
+EOF
+
+RUN chmod +x /usr/local/bin/start.sh
+
+# Use our simple startup script
+CMD ["/usr/local/bin/start.sh"]

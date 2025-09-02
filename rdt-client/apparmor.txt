@@ -1,24 +1,37 @@
 #include <tunables/global>
 
-profile rdt-client flags=(attach_disconnected,mediate_deleted,complain) {
+profile rdt-client flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
-  # Allow everything - this is a very permissive profile for debugging
-  /** rwklmx,
+  # Basic capabilities
+  capability net_bind_service,
+  capability chown,
+  capability fowner,
+
+  # Network access
+  network inet stream,
+  network inet6 stream,
+
+  # File access
+  /data/** rwk,
+  /share/** rwk,
+  /tmp/** rwk,
   
-  # All capabilities
-  capability,
+  # Application files
+  /app/** rix,
+  /usr/** rix,
+  /bin/** rix,
+  /lib/** rm,
+  /lib64/** rm,
   
-  # All network access
-  network,
+  # System files (read-only)
+  /etc/** r,
+  /proc/sys/kernel/random/uuid r,
   
-  # Allow all signals
-  signal,
+  # Startup script
+  /usr/local/bin/start.sh rix,
   
-  # Allow ptrace
-  ptrace,
-  
-  # Allow mount operations
-  mount,
-  umount,
+  # Deny sensitive paths
+  deny /root/** rwklx,
+  deny /sys/kernel/security/** rwklx,
 }

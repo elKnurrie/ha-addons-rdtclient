@@ -1,22 +1,22 @@
 # RDT Client (Home Assistant Add-on)
 
-**Version 0.2.7**
+**Version 0.3.0**
 
 This add-on runs the official `rogerfar/rdtclient` container, providing Real-Debrid torrent client functionality within Home Assistant.
 
 ## Configuration
 
 Set the **download_path** from the add-on UI (default: `/share/rdt-downloads`).
-On container start the add-on will automatically:
 
-- Create the folder if it doesn't exist.
-- Symlink rdt-client's internal `/data/downloads` to your chosen folder, so rdt-client
-  uses it without further manual steps.
+The add-on will automatically create the download folder if it doesn't exist and make it available to RDT Client.
+
+**Note:** You may need to manually configure the download path within RDT Client's settings after first startup.
 
 ### First-run steps
 
-No manual path changes needed in rdt-client. Just start the add-on and open the Web UI.
-Keep the default **Database path** `/data/db/rdtclient.db`.
+1. Start the add-on and open the Web UI
+2. In RDT Client settings, configure your download path to match the path you set in the add-on configuration
+3. Keep the default **Database path** `/data/db/rdtclient.db`
 
 ## Ports
 - **6500/tcp** – Web UI
