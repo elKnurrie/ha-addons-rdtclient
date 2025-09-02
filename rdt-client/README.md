@@ -1,6 +1,6 @@
 # RDT Client (Home Assistant Add-on)
 
-**Version 0.3.0**
+**Version 0.3.1**
 
 This add-on runs the official `rogerfar/rdtclient` container, providing Real-Debrid torrent client functionality within Home Assistant.
 
@@ -31,7 +31,13 @@ The add-on will automatically create the download folder if it doesn't exist and
 - If you encounter build issues, make sure you're using the latest version of the add-on.
 - **Note**: You may need to manually set the download path in RDT Client's settings after first startup.
 
-## Recent Updates (v0.3.0)
+## Recent Updates (v0.3.1)
+- **Fixed init system compatibility**: Custom init wrapper that works with the base image's existing init system
+- **Preserved original functionality**: Delegates to the original `/init` after running Home Assistant setup
+- **Enhanced AppArmor support**: Added permissions for both custom scripts and original S6 overlay system
+- **Better integration**: Works with the base image's existing architecture instead of replacing it
+
+### Previous Updates (v0.3.0)
 - **Major Simplification**: Removed S6 overlay dependencies that were causing permission issues
 - **Simplified startup process**: Custom startup script instead of complex S6 overlay system  
 - **Cleaner AppArmor profile**: Minimal, focused security profile without unnecessary complexity

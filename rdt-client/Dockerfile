@@ -3,8 +3,8 @@ FROM rogerfar/rdtclient:latest
 # Install jq to read /data/options.json written by Home Assistant
 RUN apk add --no-cache jq
 
-# Create a simple startup script
-COPY <<EOF /usr/local/bin/start.sh
+# Create a simple startup script that works with the base image
+COPY <<EOF /usr/local/bin/ha-setup.sh
 #!/bin/bash
 set -e
 
@@ -24,16 +24,22 @@ fi
 mkdir -p "\$DOWNLOAD_PATH"
 chmod 755 "\$DOWNLOAD_PATH"
 
-# Set environment variable for RDT Client
-export RDT_DOWNLOAD_PATH="\$DOWNLOAD_PATH"
-
-echo "RDT Client starting with download path: \$DOWNLOAD_PATH"
-
-# Start the original RDT Client
-exec /app/RDTClient
+echo "HA Setup: Download path configured as \$DOWNLOAD_PATH"
 EOF
 
-RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/ha-setup.sh
 
-# Use our simple startup script
-CMD ["/usr/local/bin/start.sh"]
+# Create a custom init script that runs our setup then delegates to the original
+COPY <<EOF /custom-init
+#!/bin/bash
+# Run our Home Assistant setup
+/usr/local/bin/ha-setup.sh
+
+# Delegate to the original init system
+exec /init "\$@"
+EOF
+
+RUN chmod +x /custom-init
+
+# Use our custom init
+ENTRYPOINT ["/custom-init"]

@@ -28,8 +28,15 @@ profile rdt-client flags=(attach_disconnected,mediate_deleted) {
   /etc/** r,
   /proc/sys/kernel/random/uuid r,
   
-  # Startup script
-  /usr/local/bin/start.sh rix,
+  # Our custom scripts
+  /usr/local/bin/ha-setup.sh rix,
+  /custom-init rix,
+  
+  # Original init system
+  /init rix,
+  /package/** rix,
+  /command/** rix,
+  /run/s6/** rwk,
   
   # Deny sensitive paths
   deny /root/** rwklx,
