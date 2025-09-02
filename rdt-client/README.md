@@ -23,30 +23,25 @@ The add-on will automatically create the download folder if it doesn't exist and
 
 ## Data locations (inside the container)
 - `/data/db` – SQLite database (`rdtclient.db`)
-- `/data/downloads` – symlink pointing to your configured `download_path`
+- `/share/rdt-downloads` – Default download path (or your configured path)
 
 ## Troubleshooting
 - If the add-on doesn't appear, click **Add-on Store → ⋮ → Reload**.
 - Ensure your configured path lives under `/share` and is writable.
 - If you encounter build issues, make sure you're using the latest version of the add-on.
+- **Note**: You may need to manually set the download path in RDT Client's settings after first startup.
 
-## Recent Updates (v0.2.7)
-- **Maximum permissive AppArmor profile**: Added complain flag and full permissions (rwklmx) to resolve all permission issues
-- **Fixed s6-overlay-suexec permissions**: Specific permission fixes for the S6 overlay suexec binary
-- **Enhanced S6 binary permissions**: Added comprehensive permission setting for all S6-related binaries
-- **Debug-friendly configuration**: Complain mode allows debugging while maintaining functionality
+## Recent Updates (v0.3.0)
+- **Major Simplification**: Removed S6 overlay dependencies that were causing permission issues
+- **Simplified startup process**: Custom startup script instead of complex S6 overlay system  
+- **Cleaner AppArmor profile**: Minimal, focused security profile without unnecessary complexity
+- **Manual configuration**: Removed automatic symlink setup - users configure download path in RDT Client directly
+- **Better reliability**: No more init system conflicts or permission denied errors
 
-### Previous Updates (v0.2.6)
-- **Simplified AppArmor profile**: Switched to highly permissive profile to resolve all S6 overlay permission issues
-- **Comprehensive file permissions**: Added recursive permission setting for all S6 overlay components
-- **Fixed docker-mods and rc.init errors**: Enhanced permissions for all S6 initialization scripts
-- **Improved container compatibility**: Very permissive profile while maintaining essential security boundaries
-
-### Previous Updates (v0.2.5)
-- **Fixed S6 overlay permissions**: Resolved persistent "/init: Permission denied" and S6 basedir/bin/init errors
-- **Enhanced AppArmor S6 support**: Added comprehensive permissions for S6 overlay init system
-- **Improved system capabilities**: Added sys_admin capability for container operations
-- **Better file system access**: Enhanced permissions for /proc, /sys, /opt, and /home directories
+### Previous Updates (v0.2.x)
+- Multiple attempts to fix S6 overlay permission issues (v0.2.2 through v0.2.7)
+- Fixed Docker build issues with Alpine Linux package manager
+- Enhanced AppArmor profiles for better compatibility
 
 ### Previous Updates (v0.2.4)
 - **Fixed init script permissions**: Resolved "/init: Permission denied" error during container startup
