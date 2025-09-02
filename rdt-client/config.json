@@ -9,7 +9,7 @@
   "boot": "auto",
   "panel_icon": "mdi:download",
   "webui": "http://[HOST]:[PORT:6500]",
-  "image": "rogerfar/rdtclient:latest",
+  "image": "rogerfar/rdtclient",
   "ports": {
     "6500/tcp": 6500
   },
