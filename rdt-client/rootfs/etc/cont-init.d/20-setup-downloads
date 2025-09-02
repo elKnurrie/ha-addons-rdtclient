@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bash
+set -euo pipefail
+OPTIONS_FILE="/data/options.json"
+DEFAULT_PATH="/share/rdt-downloads"
+
+DOWNLOAD_PATH="${DEFAULT_PATH}"
+if [ -f "$OPTIONS_FILE" ]; then
+  VAL=$(jq -r '.download_path // empty' "$OPTIONS_FILE" || true)
+  if [ -n "${VAL}" ] && [[ "${VAL}" == /share/* ]]; then
+    DOWNLOAD_PATH="${VAL}"
+  fi
+fi
+
+mkdir -p "$DOWNLOAD_PATH"
+chown -R root:root "$DOWNLOAD_PATH" || true
+chmod -R 775 "$DOWNLOAD_PATH" || true
+
+if [ -L /data/downloads ]; then
+  rm -f /data/downloads
+fi
+if [ -d /data/downloads ] && [ ! -L /data/downloads ]; then
+  shopt -s dotglob nullglob || true
+  mv /data/downloads/* "$DOWNLOAD_PATH"/ 2>/dev/null || true
+  rmdir /data/downloads 2>/dev/null || true
+fi
+ln -s "$DOWNLOAD_PATH" /data/downloads
+
+echo "[cont-init] rdt-client: download path set to $DOWNLOAD_PATH (symlinked at /data/downloads)"

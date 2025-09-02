@@ -6,15 +6,10 @@ profile rdt-client flags=(attach_disconnected) {
   network inet tcp,
   capability net_bind_service,
 
-  # Allow HA mapped folders
   /data/** rwk,
   /share/** rwk,
-
-  # rdt-client binary and web root
   /usr/** r,
   /app/** rk,
   /tmp/** rwk,
-
-  # Docker/OS specifics
   deny /root/** rwklx,
 }
