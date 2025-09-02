@@ -1,6 +1,6 @@
 # RDT Client – Home Assistant Add-on
 
-**Current Version: 0.2.4**
+**Current Version: 0.2.5**
 
 This repository provides a Home Assistant add-on wrapping the official
 https://hub.docker.com/r/rogerfar/rdtclient image.
@@ -27,6 +27,12 @@ After first start, the add-on automatically links rdt-client's internal `/data/d
 to the path you choose in the **Configuration** tab (default `/share/rdt-downloads`).
 
 ## Recent Updates
+
+### Version 0.2.5
+- **Fixed S6 overlay init system**: Resolved persistent permission denied errors for S6 basedir/bin/init
+- **Comprehensive AppArmor permissions**: Added full support for S6 overlay file system structure
+- **Enhanced container capabilities**: Added sys_admin and improved file system access permissions
+- **Better init system support**: Explicit permissions for all S6 overlay components and runtime directories
 
 ### Version 0.2.4
 - **Fixed container startup issues**: Resolved "/init: Permission denied" errors
