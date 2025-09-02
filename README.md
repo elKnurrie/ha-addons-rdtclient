@@ -23,44 +23,21 @@ https://hub.docker.com/r/rogerfar/rdtclient image.
    `https://github.com/elKnurrie/ha-addons-rdtclient`
 3. Find **RDT Client** under the store, **Install**, then **Start**.
 
-After first start, the add-on automatically links rdt-client's internal `/data/downloads`
-to the path you choose in the **Configuration** tab (default `/share/rdt-downloads`).
+After first start, you'll need to manually configure the download path in RDT Client's settings to match the path you configured in the add-on (default `/share/rdt-downloads`).
 
 ## Recent Updates
 
-### Version 0.2.7
-- **Maximum permissive AppArmor profile**: Added complain flag and maximum permissions to resolve s6-overlay-suexec issues
-- **Fixed S6 overlay suexec permissions**: Specific permission fixes for s6-overlay-suexec binary in multiple locations
-- **Enhanced debugging capabilities**: Complain mode allows full functionality while providing permission debugging
-- **Comprehensive S6 binary support**: Complete permission coverage for all S6 overlay components
+### Version 0.3.0 - Major Simplification
+- **Removed S6 overlay dependencies**: Eliminated all S6 overlay permission issues by using a simple startup script
+- **Simplified architecture**: Direct execution of RDT Client without complex init systems
+- **Cleaner security profile**: Minimal AppArmor configuration focused only on necessary permissions
+- **Manual configuration approach**: Users configure download paths directly in RDT Client (more reliable)
+- **Better stability**: No more permission denied errors or init system conflicts
 
-### Version 0.2.6
-- **Simplified AppArmor to highly permissive profile**: Resolved all S6 overlay permission issues with comprehensive file access
-- **Enhanced file permission management**: Recursive permission setting for all S6 overlay components including docker-mods
-- **Fixed S6 supervision errors**: Resolved s6-supervise, s6rc-oneshot-runner, and rc.init permission denied errors
-- **Improved container initialization**: Comprehensive permission fixes for all S6 overlay scripts and services
-
-### Version 0.2.5
-- **Fixed S6 overlay init system**: Resolved persistent permission denied errors for S6 basedir/bin/init
-- **Comprehensive AppArmor permissions**: Added full support for S6 overlay file system structure
-- **Enhanced container capabilities**: Added sys_admin and improved file system access permissions
-- **Better init system support**: Explicit permissions for all S6 overlay components and runtime directories
-
-### Version 0.2.4
-- **Fixed container startup issues**: Resolved "/init: Permission denied" errors
-- **Enhanced execution permissions**: Updated AppArmor profile with proper init system support
-- **Improved security capabilities**: Added necessary permissions for user/group management
-- **Better container initialization**: Explicit permission setting for all init scripts
-
-### Version 0.2.3
-- **Fixed AppArmor profile loading errors**: Resolved installation issues in Home Assistant
-- **Enhanced security configuration**: Updated AppArmor permissions for better compatibility
-- **Improved system integration**: Added support for IPv6 networking and additional file system access
-
-### Version 0.2.2
-- **Fixed Docker build issues**: Resolved compatibility problems with Alpine Linux base image
-- **Improved package management**: Updated from apt-get to apk for better reliability
-- **Enhanced error handling**: Better setup process and troubleshooting
+### Previous Versions (0.2.x)
+- Multiple iterations attempting to fix S6 overlay permission issues
+- Enhanced AppArmor profiles and permission management
+- Fixed Docker build compatibility with Alpine Linux
 
 ## Support
 
