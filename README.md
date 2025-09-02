@@ -1,6 +1,6 @@
 # RDT Client – Home Assistant Add-on
 
-**Current Version: 0.2.3**
+**Current Version: 0.2.4**
 
 This repository provides a Home Assistant add-on wrapping the official
 https://hub.docker.com/r/rogerfar/rdtclient image.
@@ -27,6 +27,12 @@ After first start, the add-on automatically links rdt-client's internal `/data/d
 to the path you choose in the **Configuration** tab (default `/share/rdt-downloads`).
 
 ## Recent Updates
+
+### Version 0.2.4
+- **Fixed container startup issues**: Resolved "/init: Permission denied" errors
+- **Enhanced execution permissions**: Updated AppArmor profile with proper init system support
+- **Improved security capabilities**: Added necessary permissions for user/group management
+- **Better container initialization**: Explicit permission setting for all init scripts
 
 ### Version 0.2.3
 - **Fixed AppArmor profile loading errors**: Resolved installation issues in Home Assistant
