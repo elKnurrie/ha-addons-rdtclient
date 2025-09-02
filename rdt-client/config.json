@@ -1,0 +1,25 @@
+{
+  "name": "RDT Client",
+  "version": "0.1.0",
+  "slug": "rdt_client",
+  "description": "Run rdt-client (Real-Debrid Torrent Client) inside Home Assistant",
+  "url": "https://github.com/your-user/ha-addons-rdtclient",
+  "arch": ["amd64", "aarch64", "armv7"],
+  "startup": "services",
+  "boot": "auto",
+  "panel_icon": "mdi:download",
+  "webui": "http://[HOST]:[PORT:6500]",
+  "image": "rogerfar/rdtclient:latest",
+  "ports": {
+    "6500/tcp": 6500
+  },
+  "ports_description": {
+    "6500/tcp": "Web interface"
+  },
+  "map": ["share:rw"],
+  "environment": {
+    "TZ": "Europe/Amsterdam"
+  },
+  "schema": {},
+  "init": false
+}
